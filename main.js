@@ -42,7 +42,6 @@ const peer = new Peer({
     key: 'peerjs',
     host: 'mypeer302.herokuapp.com',
     port: 443,
-    path: '/myapp',
     secure: true
 });
 

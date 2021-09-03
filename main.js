@@ -39,6 +39,7 @@ function playStream(idVideoTag, stream) {
 // .then(stream => playStream('localStream', stream));
 
 const peer = new Peer({
+    path: '/myapp',
     key: 'peerjs',
     host: 'mypeer302.herokuapp.com',
     port: 443,

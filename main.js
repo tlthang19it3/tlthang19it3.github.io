@@ -38,12 +38,7 @@ function playStream(idVideoTag, stream) {
 // openStream()
 // .then(stream => playStream('localStream', stream));
 
-const peer = new Peer({ 
-    key: 'peerjs', 
-    host: 'https://9000-beige-giraffe-uj29dlri.ws-us16.gitpod.io', 
-    secure: true, 
-    port: 443
-});
+const peer = new Peer();
 
 peer.on('open', id => {
     $('#my-peer').append(id);

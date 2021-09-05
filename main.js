@@ -51,17 +51,21 @@ function playStream(idVideoTag, stream) {
     video.play();
 }
 
+function endScreenStream(id,stream) {
+    openStream()
+         .then(stream => {
+             playStream('localStream', stream);
+             const call = peer.call(id, stream);
+             call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
+    });
+}
+
 function playScreenStream(idVideoTag, stream) {
     const id = $('#remoteId').val();
     const video = document.getElementById(idVideoTag);
     video.srcObject = stream;
     stream.getVideoTracks()[0].addEventListener('ended', () => {
-                openStream()
-                    .then(stream => {
-                        playStream('localStream', stream);
-                        const call = peer.call(id, stream);
-                        call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
-                    });
+           console.log("ended");
      });
 }
 

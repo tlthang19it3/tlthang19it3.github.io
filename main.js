@@ -1,5 +1,5 @@
 const socket = io('https://stream3012.herokuapp.com/');
-let remoteID = "";
+
 $('#div-chat').hide();
 
 socket.on('DANH_SACH_ONLINE', arrUserInfo => {
@@ -38,20 +38,7 @@ function openStream() {
     return navigator.mediaDevices.getUserMedia(config);
 }
 
-function openScreenStream() {
-    const config = {
-        video: true
-    };
-    return navigator.mediaDevices.getDisplayMedia(config);
-}
-
 function playStream(idVideoTag, stream) {
-    const video = document.getElementById(idVideoTag);
-    video.srcObject = stream;
-    video.play();
-}
-
-function playScreenStream(idVideoTag, stream) {
     const video = document.getElementById(idVideoTag);
     video.srcObject = stream;
     video.play();
@@ -81,6 +68,31 @@ peer.on('open', id => {
         });
     });
 });
+if (adapter.browserDetails.browser == 'google') {
+    adapter.browserShim.shimGetDisplayMedia(window, 'screen');
+  }
+const shareScreen = document.getElementById('shareScreen');
+function handleSuccess(stream) {
+    shareScreen.disabled = true;
+    const video = document.querySelector('video');
+    video.srcObject = stream;
+  
+    // demonstrates how to detect that the user has stopped
+    // sharing the screen via the browser UI.
+    stream.getVideoTracks()[0].addEventListener('ended' , () => {
+      errorMsg('The user has ended sharing the screen');
+      shareScreen.disabled = false;
+    });
+  }
+  
+  function handleError(error) {
+    errorMsg(`getDisplayMedia error: ${error.name}`, error);
+  }
+
+  shareScreen.addEventListener('click', () => {
+    navigator.mediaDevices.getDisplayMedia({video: true})
+        .then(handleSuccess, handleError);
+  });
 
 //Caller
 $('#btnCall').click(() => {
@@ -112,38 +124,15 @@ peer.on('call', call => {
         });
 });
 
-const shareScreen = document.getElementById('shareScreen');
-shareScreen.addEventListener('click', () => {
-   openScreenStream()
-        .then(stream => {
-            playScreenStream('screenStream', stream);
-            const call = peer.call(remoteID, stream);
-            call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
-        });
-});
-
-$('#btnVideo').click(() => {
-    $("video").get(0).pause();
-    document.getElementById('btnVideo').style.display = 'none';
-    document.getElementById('btnVideo1').style.display = 'inline';
-})
-
-$('#btnVideo1').click(() => {
-    $("video").get(0).play();
-    document.getElementById('btnVideo1').style.display = 'none';
-    document.getElementById('btnVideo').style.display = 'inline';
-})
-
 $('#ulUser').on('click', 'li', function () {
     const id = $(this).attr('id');
     console.log(id);
-    document.getElementById('video-call').style.display = 'block';
-    document.getElementById('online').style.display = 'none';
     openStream()
         .then(stream => {
             playStream('localStream', stream);
             const call = peer.call(id, stream);
             call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
-            remoteID = id;
+            document.getElementById('video-call').style.display = 'block';
+            document.getElementById('online').style.display = 'none';
         });
 });

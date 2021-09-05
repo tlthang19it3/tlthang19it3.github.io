@@ -129,6 +129,18 @@ shareScreen.addEventListener('click', () => {
         });
 });
 
+$('#btnVideo').click(() => {
+    $("video").get(0).pause();
+    document.getElementById('btnVideo').style.display = 'none';
+    document.getElementById('btnVideo1').style.display = 'inline';
+})
+
+$('#btnVideo1').click(() => {
+    $("video").get(0).play();
+    document.getElementById('btnVideo1').style.display = 'none';
+    document.getElementById('btnVideo').style.display = 'inline';
+})
+
 $('#ulUser').on('click', 'li', function () {
     const id = $(this).attr('id');
     console.log(id);

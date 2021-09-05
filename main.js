@@ -87,6 +87,15 @@ $('#shareScreen').click(() => {
             playStream('screenStream', stream);
             const call = peer.call(id, stream);
             call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
+        
+            stream.getVideoTracks()[0].addEventListener('ended', () => {
+                openStream()
+                    .then(stream => {
+                        playStream('localStream', stream);
+                        const call = peer.call(id, stream);
+                        call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
+                    });
+            });
         });
 });
 

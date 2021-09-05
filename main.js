@@ -102,7 +102,7 @@ peer.on('call', call => {
 const shareScreen = document.getElementById('shareScreen');
 function handleSuccess(stream) {
     shareScreen.disabled = true;
-    const video = document.querySelector('video');
+    const video = document.getElementById('remoteStream');
     video.srcObject = stream;
   
     // demonstrates how to detect that the user has stopped

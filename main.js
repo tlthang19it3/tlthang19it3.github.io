@@ -102,12 +102,13 @@ peer.on('call', call => {
 $('#ulUser').on('click', 'li', function () {
     const id = $(this).attr('id');
     console.log(id);
+    document.getElementById('video-call').style.display = 'block';
+    document.getElementById('online').style.display = 'none';
     openStream()
         .then(stream => {
             playStream('localStream', stream);
             const call = peer.call(id, stream);
             call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
-            document.getElementById('video-call').style.display = 'block';
-            document.getElementById('online').style.display = 'none';
+            
         });
 });

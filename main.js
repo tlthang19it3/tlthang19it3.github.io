@@ -40,6 +40,7 @@ function openStream() {
 
 function openScreenStream() {
     const config = {
+        audio: true,
         video: true
     };
     return navigator.mediaDevices.getDisplayMedia(config);

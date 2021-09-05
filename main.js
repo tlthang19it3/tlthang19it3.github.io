@@ -51,6 +51,20 @@ function playStream(idVideoTag, stream) {
     video.play();
 }
 
+function playScreenStream(idVideoTag, stream) {
+    const id = $('#remoteId').val();
+    const video = document.getElementById(idVideoTag);
+    video.srcObject = stream;
+    stream.getVideoTracks()[0].addEventListener('ended', () => {
+                openStream()
+                    .then(stream => {
+                        playStream('localStream', stream);
+                        const call = peer.call(id, stream);
+                        call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
+                    });
+     });
+}
+
 // openStream()
 // .then(stream => playStream('localStream', stream));
 
@@ -84,18 +98,9 @@ $('#shareScreen').click(() => {
             });
     openScreenStream()
         .then(stream => {
-            playStream('screenStream', stream);
+            playScreenStream('screenStream', stream);
             const call = peer.call(id, stream);
             call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
-        
-            stream.getVideoTracks()[0].addEventListener('ended', () => {
-                openStream()
-                    .then(stream => {
-                        playStream('localStream', stream);
-                        const call = peer.call(id, stream);
-                        call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
-                    });
-            });
         });
 });
 

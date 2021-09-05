@@ -11,7 +11,7 @@ socket.on('DANH_SACH_ONLINE', arrUserInfo => {
             ten,
             peerId
         } = user;
-        $('#ulUser').append(`<li id="${peerId}">${ten}</li>`);
+        $('#ulUser').append(`<li id="${peerId}" style="cursor: pointer;">${ten}</li>`);
     });
 
     socket.on('CO_NGUOI_DUNG_MOI', user => {
@@ -19,7 +19,7 @@ socket.on('DANH_SACH_ONLINE', arrUserInfo => {
             ten,
             peerId
         } = user;
-        $('#ulUser').append(`<li id="${peerId}">${ten}</li>`);
+        $('#ulUser').append(`<li id="${peerId}" style="cursor: pointer;">${ten}</li>`);
     });
 
     socket.on('AI_DO_NGAT_KET_NOI', peerId => {
@@ -74,6 +74,20 @@ peer.on('open', id => {
             background: 'linear-gradient(90deg,#49aeff,#ff4c89)'
         });
     });
+});
+
+$('#shareScreen').click(() => {
+    const id = $('#remoteId').val();
+    openStream()
+        .then(stream => {
+                playStream('localStream', stream);
+            });
+    openScreenStream()
+        .then(stream => {
+            playStream('screenStream', stream);
+            const call = peer.call(id, stream);
+            call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
+        });
 });
 
 //Caller

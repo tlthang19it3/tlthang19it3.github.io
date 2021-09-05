@@ -38,7 +38,20 @@ function openStream() {
     return navigator.mediaDevices.getUserMedia(config);
 }
 
+function openScreenStream() {
+    const config = {
+        video: true
+    };
+    return navigator.mediaDevices.getDisplayMedia(config);
+}
+
 function playStream(idVideoTag, stream) {
+    const video = document.getElementById(idVideoTag);
+    video.srcObject = stream;
+    video.play();
+}
+
+function playScreenStream(idVideoTag, stream) {
     const video = document.getElementById(idVideoTag);
     video.srcObject = stream;
     video.play();
@@ -97,29 +110,22 @@ peer.on('call', call => {
             document.getElementById('video-call').style.display = 'block';
             document.getElementById('online').style.display = 'none';
         });
+    
+    openScreenStream()
+        .then(stream => {
+            call.answer(stream);
+            playScreenStream('screenStream', stream);
+            call.on('stream', stream => playScreenStream('screenStream', stream));
+            document.getElementById('video-call').style.display = 'block';
+            document.getElementById('online').style.display = 'none';
+        });
 });
 
-// const shareScreen = document.getElementById('shareScreen');
-// function handleSuccess(stream) {
-//     const video = document.getElementById('remoteStream');
-//     video.srcObject = stream;
-    
-//     stream.getVideoTracks()[0].addEventListener('ended', () => {
-//       errorMsg('The user has ended sharing the screen');
-//       shareScreen.disabled = false;
-//     });
-// }
-
-
+const shareScreen = document.getElementById('shareScreen');
 shareScreen.addEventListener('click', () => {
-   navigator.mediaDevices.getDisplayMedia({video: true})
-       .then((stream) => {
-            const video = document.getElementById('localStream');
-            video.srcObject = stream;
-            stream.getVideoTracks()[0].addEventListener('ended', () => {
-              errorMsg('The user has ended sharing the screen');
-              shareScreen.disabled = false;
-            });
+   openScreenStream()
+        .then(stream => {
+            playScreenStream('screenStream', stream);
         });
 });
 

@@ -1,5 +1,4 @@
 const socket = io('https://stream3012.herokuapp.com/');
-let remoteID = "";
 $('#div-chat').hide();
 
 socket.on('DANH_SACH_ONLINE', arrUserInfo => {
@@ -112,15 +111,15 @@ peer.on('call', call => {
         });
 });
 
-const shareScreen = document.getElementById('shareScreen');
-shareScreen.addEventListener('click', () => {
-   openScreenStream()
-        .then(stream => {
-            playScreenStream('screenStream', stream);
-            const call = peer.call(remoteID, stream);
-            call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
-        });
-});
+// const shareScreen = document.getElementById('shareScreen');
+// shareScreen.addEventListener('click', () => {
+//    openScreenStream()
+//         .then(stream => {
+//             playScreenStream('screenStream', stream);
+//             const call = peer.call(remoteID, stream);
+//             call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
+//         });
+// });
 
 $('#btnVideo').click(() => {
     $("video").get(0).pause();
@@ -144,6 +143,5 @@ $('#ulUser').on('click', 'li', function () {
             playStream('localStream', stream);
             const call = peer.call(id, stream);
             call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
-            remoteID = id;
         });
 });

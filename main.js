@@ -99,9 +99,6 @@ peer.on('call', call => {
         });
 });
 
-if (adapter.browserDetails.browser == 'google') {
-    adapter.browserShim.shimGetDisplayMedia(window, 'screen');
-}
 const shareScreen = document.getElementById('shareScreen');
 function handleSuccess(stream) {
     shareScreen.disabled = true;

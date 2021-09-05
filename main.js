@@ -65,8 +65,9 @@ function playScreenStream(idVideoTag, stream) {
     const id = $('#remoteId').val();
     const video = document.getElementById(idVideoTag);
     video.srcObject = stream;
+    video.play();
     stream.getVideoTracks()[0].addEventListener('ended', () => {
-           console.log("ended");
+           endScreenStream(id,stream);
      });
 }
 

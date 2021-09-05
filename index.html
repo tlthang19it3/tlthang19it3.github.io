@@ -1,63 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <title>Video Call WebRTC</title>
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    <script src="jquery.js"></script>
-    <script src="peer.js"></script>
-    <script src="socket.io.js"></script>
-    <link rel="stylesheet" href="index.css">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-</head>
-
-<body>
-    <div id="intro">
-        <div class="row" style="margin: 0;padding: 0;">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text">
-                <div class="lightbar"></div>
-                <div class="topLayer"></div>
-                <h3>VIDEO CALL</h3>
-                <button id="btnStart">Start</button>
-            </div>
-        </div>
-    </div>
-    <div id="div-chat">
-        <div id="online">
-            <h2 class="font-effect-anaglyph">ONLINE USER</h2>
-            <h3 id="my-peer">Your Id: </h3>
-            <br>
+    <head>
+        <title>Video Call WebRTC</title>
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+        <script src="jquery.js"></script>
+        <script src="peer.js"></script>
+        <script src="socket.io.js"></script>
+    </head>
+    <body>
+        <div id="div-chat">
+            <p>Online user:</p>
             <ul id="ulUser">
             </ul>
+            <h3 id="my-peer">Your Id: </h3>
+            <video id="localStream" width="300" controls></video>
+            <br /><br />
+            <video id="remoteStream" width="300" controls></video>
+            <br /><br />
+            <input type="text" id="remoteId" placeholder="Remote ID">
+            <button id="btnCall">Call</button>
         </div>
-        <div id="video-call">
-            <video id="localStream"></video>
-            <video id="remoteStream"></video>
-            <div style="display: none;">
-                <input type="text" id="remoteId" placeholder="Remote ID">
-                <button id="btnCall">Call</button>
-            </div>
-            <div class="call-action-div">
-                <button class="btn btn-mic"><i class="fas fa-microphone"></i></button>
-                <button class="btn btn-mic"><i class="fas fa-phone"></i></button>
-                <button class="btn btn-mic"><i class="fas fa-desktop"></i></button>
-                <button class="btn btn-mic" id="btnVideo"><i class="fas fa-video"></i></button>
-                <button class="btn btn-mic"><i class="fas fa-user-plus"></i></button>
-            </div>
+        <div id="div-dang-ky">
+            <br /><br />
+            <input type="text" id="txtUsername" placeholder="Enter your username">
+            <button id="btnSignUp">Sign Up</button>
         </div>
-    </div>
-    <div id="div-dang-ky">
-        <h2>LOGIN</h2>
-        <br /><br />
-        <br>
-        <input type="text" id="txtUsername">
-        <br>
-        <button id="btnSignUp">Sign Up</button>
-    </div>
-</body>
-<script src="main.js"></script>
-
+    </body>
+    <script src="main.js"></script>
 </html>

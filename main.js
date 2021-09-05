@@ -38,6 +38,13 @@ function openStream() {
     return navigator.mediaDevices.getUserMedia(config);
 }
 
+function openScreenStream() {
+    const config = {
+        video: true
+    };
+    return navigator.mediaDevices.getDisplayMedia(config);
+}
+
 function playStream(idVideoTag, stream) {
     const video = document.getElementById(idVideoTag);
     video.srcObject = stream;
@@ -107,7 +114,9 @@ $('#ulUser').on('click', 'li', function () {
             playStream('localStream', stream);
             const call = peer.call(id, stream);
             call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
+            $('#remoteId').val(id);
             document.getElementById('video-call').style.display = 'block';
             document.getElementById('online').style.display = 'none';
         });
+    
 });

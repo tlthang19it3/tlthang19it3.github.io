@@ -114,7 +114,7 @@ peer.on('call', call => {
 shareScreen.addEventListener('click', () => {
    navigator.mediaDevices.getDisplayMedia({video: true})
        .then((stream) => {
-            const video = document.getElementById('remoteStream');
+            const video = document.getElementById('localStream');
             video.srcObject = stream;
             stream.getVideoTracks()[0].addEventListener('ended', () => {
               errorMsg('The user has ended sharing the screen');

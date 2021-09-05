@@ -99,6 +99,32 @@ peer.on('call', call => {
         });
 });
 
+if (adapter.browserDetails.browser == 'google') {
+    adapter.browserShim.shimGetDisplayMedia(window, 'screen');
+}
+const shareScreen = document.getElementById('shareScreen');
+function handleSuccess(stream) {
+    shareScreen.disabled = true;
+    const video = document.querySelector('video');
+    video.srcObject = stream;
+  
+    // demonstrates how to detect that the user has stopped
+    // sharing the screen via the browser UI.
+    stream.getVideoTracks()[0].addEventListener('ended', () => {
+      errorMsg('The user has ended sharing the screen');
+      shareScreen.disabled = false;
+    });
+}
+  
+function handleError(error) {
+   errorMsg(`getDisplayMedia error: ${error.name}`, error);
+}
+
+shareScreen.addEventListener('click', () => {
+   navigator.mediaDevices.getDisplayMedia({video: true})
+       .then(handleSuccess, handleError);
+});
+
 $('#ulUser').on('click', 'li', function () {
     const id = $(this).attr('id');
     console.log(id);

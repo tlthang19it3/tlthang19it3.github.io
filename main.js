@@ -97,12 +97,9 @@ peer.on('open', id => {
 });
 
 $('#shareScreen').click(() => {
+    $('#screenStream').show();
     const id = $('#remoteId').val();
     openStream()
-        .then(stream => {
-                playStream('localStream', stream);
-            });
-    openScreenStream()
         .then(stream => {
             playScreenStream('screenStream', stream);
             const call = peer.call(id, stream);

@@ -38,12 +38,26 @@ function openStream() {
     return navigator.mediaDevices.getUserMedia(config);
 }
 
-function openScreenStream() {
-    const config = {
-        audio: true,
+async function openScreenStream() {
+    const constraintsVideo = {
+        audio: false,
         video: true
     };
-    return navigator.mediaDevices.getDisplayMedia(config);
+    const constraintsAudio = {audio: true};
+    
+    // create audio and video streams separately
+    const audioStream = await navigator.mediaDevices.getUserMedia(constraintsAudio);
+    const videoStream = await navigator.mediaDevices.getUserMedia(constraintsVideo);
+    
+    // combine the streams 
+    const combinedStream = new MediaStream([...videoStream.getVideoTracks(), ...audioStream.getAudioTracks()]);
+    return combinedStream;
+    
+//     const config = {
+//         audio: true,
+//         video: true
+//     };
+//     return navigator.mediaDevices.getDisplayMedia(config);
 }
 
 function playStream(idVideoTag, stream) {
@@ -107,16 +121,6 @@ $('#shareScreen').click(() => {
         });
 });
 
-//Caller
-$('#btnCall').click(() => {
-    const id = $('#remoteId').val();
-    openStream()
-        .then(stream => {
-            playStream('localStream', stream);
-            const call = peer.call(id, stream);
-            call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
-        });
-});
 $('#btnStart').click(() => {
     document.getElementById('intro').style.display = 'none';
     document.getElementById('div-dang-ky').style.display = 'block';
@@ -125,7 +129,7 @@ $('#btnStart').click(() => {
     });
 });
 
-//Callee
+//Call
 peer.on('call', call => {
     openStream()
         .then(stream => {

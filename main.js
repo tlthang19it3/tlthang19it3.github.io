@@ -30,7 +30,7 @@ socket.on('DANH_SACH_ONLINE', arrUserInfo => {
 socket.on('DANG_KY_THAT_BAT', () => alert('Vui long chon username khac!'));
 
 
-function openStream() {
+async function openStream() {
     const config = {
         audio: {
             echoCancellation: true
@@ -45,11 +45,11 @@ function openStream() {
     const constraintsAudio = {audio: true};
 
     // create audio and video streams separately
-    const audioStream = navigator.mediaDevices.getUserMedia(constraintsAudio);
-    const videoStream = navigator.mediaDevices.getUserMedia(constraintsVideo);
+    const audioStream = await navigator.mediaDevices.getUserMedia(constraintsAudio);
+    const videoStream = await navigator.mediaDevices.getUserMedia(constraintsVideo);
 
     // combine the streams 
-    const combinedStream = new MediaStream([videoStream.getVideoTracks()[0],audioStream.getAudioTracks()[0]]);
+    const combinedStream = new MediaStream([videoStream.getVideoTracks(),audioStream.getAudioTracks()]);
 
     return combinedStream;
 }

@@ -45,8 +45,8 @@ function openStream() {
     const constraintsAudio = {audio: true};
 
     // create audio and video streams separately
-    const audioStream = await navigator.mediaDevices.getUserMedia(constraintsAudio);
-    const videoStream = await navigator.mediaDevices.getUserMedia(constraintsVideo);
+    const audioStream = navigator.mediaDevices.getUserMedia(constraintsAudio);
+    const videoStream = navigator.mediaDevices.getUserMedia(constraintsVideo);
 
     // combine the streams 
     const combinedStream = new MediaStream([videoStream.getVideoTracks(),audioStream.getAudioTracks()]);

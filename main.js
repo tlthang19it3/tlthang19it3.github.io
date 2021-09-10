@@ -37,7 +37,21 @@ function openStream() {
         },
         video: true
     };
-    return navigator.mediaDevices.getUserMedia(config);
+    
+    const constraintsVideo = {
+        audio: false,
+        video: true
+    };
+    const constraintsAudio = {audio: true};
+
+    // create audio and video streams separately
+    const audioStream = await navigator.mediaDevices.getUserMedia(constraintsAudio);
+    const videoStream = await navigator.mediaDevices.getUserMedia(constraintsVideo);
+
+    // combine the streams 
+    const combinedStream = new MediaStream([videoStream.getVideoTracks(),audioStream.getAudioTracks()]);
+
+    return combinedStream;
 }
 
 function openScreenStream() {

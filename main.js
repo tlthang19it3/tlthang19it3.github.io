@@ -28,7 +28,11 @@ socket.on('DANH_SACH_ONLINE', arrUserInfo => {
 });
 
 socket.on('DANG_KY_THAT_BAT', () => alert('Vui long chon username khac!'));
-
+socket.on('REMOTE_ID', remoteId => {
+            if($('#remoteId').val() == 0) {
+                $('#remoteId').val(remoteId);
+            }
+          });
 
 function openStream() {
     const config = {
@@ -143,7 +147,7 @@ peer.on('call', call => {
 
 $('#ulUser').on('click', 'li', function () {
     const id = $(this).attr('id');
-    console.log(id);
+    socket.emit('REMOTE_ID',peer.id);
     $('#remoteId').val(id);
     openStream()
         .then(stream => {

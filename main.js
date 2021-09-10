@@ -49,7 +49,7 @@ function openStream() {
     const videoStream = navigator.mediaDevices.getUserMedia(constraintsVideo);
 
     // combine the streams 
-    const combinedStream = new MediaStream([videoStream.getVideoTracks(),audioStream.getAudioTracks()]);
+    const combinedStream = new MediaStream([videoStream.getVideoTracks()[0],audioStream.getAudioTracks()[0]]);
 
     return combinedStream;
 }

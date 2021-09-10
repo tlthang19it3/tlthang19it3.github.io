@@ -32,7 +32,9 @@ socket.on('DANG_KY_THAT_BAT', () => alert('Vui long chon username khac!'));
 
 function openStream() {
     const config = {
-        audio: true,
+        audio: {
+            echoCancellation: true
+        },
         video: true
     };
     return navigator.mediaDevices.getUserMedia(config);

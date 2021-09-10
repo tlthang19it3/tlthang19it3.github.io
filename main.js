@@ -70,7 +70,8 @@ function playStream(idVideoTag, stream) {
     video.play();
 }
 
-function endScreenStream(id,stream) {
+function endScreenStream() {
+    const id = $('#remoteId').val();
     openStream()
          .then(stream => {
              playStream('localStream', stream);
@@ -85,7 +86,8 @@ function playScreenStream(idVideoTag, stream) {
     video.srcObject = stream;
     video.play();
     stream.getVideoTracks()[0].addEventListener('ended', () => {
-           endScreenStream(id,stream);
+           console.log("end share screen");
+           endScreenStream();
      });
 }
 

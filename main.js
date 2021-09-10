@@ -85,10 +85,6 @@ function playScreenStream(idVideoTag, stream) {
     const video = document.getElementById(idVideoTag);
     video.srcObject = stream;
     video.play();
-    stream.getVideoTracks()[0].addEventListener('ended', () => {
-           console.log("end share screen");
-           endScreenStream();
-     });
 }
 
 // openStream()
@@ -122,6 +118,10 @@ $('#shareScreen').click(() => {
         .then(stream => {
             $('#screenStream').show();
             playStream('screenStream', stream);
+            stream.getVideoTracks()[0].addEventListener('ended', () => {
+                   console.log("end share screen");
+                   endScreenStream();
+             });
             const call = peer.call(id, stream);
             call.on('stream', remoteStream => playStream('remoteStream', remoteStream));
         });

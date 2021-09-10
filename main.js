@@ -47,7 +47,7 @@ async function openScreenStream() {
     
     // create audio and video streams separately
     const audioStream = await navigator.mediaDevices.getUserMedia(constraintsAudio);
-    const videoStream = await navigator.mediaDevices.getUserMedia(constraintsVideo);
+    const videoStream = await navigator.mediaDevices.getDisplayMedia(constraintsVideo);
     
     // combine the streams 
     const combinedStream = new MediaStream([...videoStream.getVideoTracks(), ...audioStream.getAudioTracks()]);

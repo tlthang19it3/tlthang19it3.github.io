@@ -28,11 +28,12 @@ socket.on('DANH_SACH_ONLINE', arrUserInfo => {
 });
 
 socket.on('DANG_KY_THAT_BAT', () => alert('Vui long chon username khac!'));
-socket.on('REMOTE_ID', remoteId => {
-            if($('#remoteId').val() == 0) {
-                $('#remoteId').val(remoteId);
-            }
-          });
+
+// socket.on('REMOTE_ID', remoteId => {
+//             if($('#remoteId').val() == 0) {
+//                 $('#remoteId').val(remoteId);
+//             }
+//           });
 
 function openStream() {
     const config = {
@@ -56,12 +57,6 @@ async function openScreenStream() {
     // combine the streams 
     const combinedStream = new MediaStream([...videoStream.getVideoTracks(), ...audioStream.getAudioTracks()]);
     return combinedStream;
-    
-//     const config = {
-//         audio: true,
-//         video: true
-//     };
-//     return navigator.mediaDevices.getDisplayMedia(config);
 }
 
 function playStream(idVideoTag, stream) {
@@ -86,9 +81,6 @@ function playScreenStream(idVideoTag, stream) {
     video.srcObject = stream;
     video.play();
 }
-
-// openStream()
-// .then(stream => playStream('localStream', stream));
 
 const peer = new Peer({
     key: 'peerjs',

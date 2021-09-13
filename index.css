@@ -81,6 +81,22 @@ body {
     max-height: 20%;
     background: #fff;
 }
+
+.remotestream {
+  position: absolute;
+  top: 0;
+  left: 0px;
+  border-radius: 16px;
+  max-width: 20%;
+  max-height: 20%;
+  background: #fff;
+}
+#screenStream {
+  background: #000;
+  width: 100%;
+  height: 100%;
+}
+
 #div-chat #video-call #remoteStream
 {
     background: #000;

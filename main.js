@@ -110,7 +110,6 @@ $('#shareScreen').click(() => {
         .then(stream => {
             $('#screenStream').show();
             $('#remoteStream').addClass('remotestream');
-            $('#screenStream').show();
             playStream('screenStream', stream);
             stream.getVideoTracks()[0].addEventListener('ended', () => {
                    $('#screenStream').hide();

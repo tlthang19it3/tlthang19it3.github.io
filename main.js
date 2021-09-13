@@ -109,9 +109,12 @@ $('#shareScreen').click(() => {
     openScreenStream()
         .then(stream => {
             $('#screenStream').show();
+            $('#remoteStream').addClass('remotestream');
+            $('#screenStream').show();
             playStream('screenStream', stream);
             stream.getVideoTracks()[0].addEventListener('ended', () => {
-                   console.log("end share screen");
+                   $('#screenStream').hide();
+                   $('#remoteStream').removeClass('remotestream');
                    endScreenStream();
              });
             const call = peer.call(id, stream);
